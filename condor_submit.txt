@@ -1,0 +1,17 @@
+# Usage: condor_submit condor_submit.txt
+
+universe = vanilla
+executable = /usr/bin/python
+getenv = true
+transfer_executable = false
+
+error = log/condor.err.$(Process) 
+output = log/condor.out.$(Process)
+log = log/condor.log.$(Process)
+
+arguments = masterworker.py --role=master
+queue
+
+arguments = masterworker.py --role=worker --worker_id=$(Process)
+queue 3
+
